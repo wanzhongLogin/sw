@@ -1,7 +1,10 @@
 package org.springframework.core.annotation;
 
 
+import com.sun.istack.internal.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.ConcurrentReferenceHashMap;
+import org.springframework.util.StringUtils;
 
 import javax.print.attribute.standard.MediaSize;
 import java.lang.annotation.Annotation;
@@ -39,6 +42,24 @@ public abstract class AnnotationUtils {
 
     private static final Map<Method, AnnotationUtils.AliasDescriptor> aliasDescriptorCache =
             new ConcurrentReferenceHashMap<>(256);
+
+
+
+    public static boolean isAnnotationMetaPresent(Class<? extends Annotation> annotationType,@Nullable Class<? extends Annotation> metaAnnotationType){
+        Assert.notNull(annotationType,"annotation type must not be null");
+        if(metaAnnotationType == null){
+            return false;
+        }
+        AnnotationCacheKey cacheKey = new AnnotationCacheKey(annotationType,metaAnnotationType);
+        Boolean metaPresent = metaPresentCache.get(cacheKey);
+
+        if(metaPresent != null){
+            return metaPresent;
+        }
+        metaPresent = Boolean.FALSE;
+
+        return metaPresent;
+    }
 
     /**
      * 注解缓存Key
@@ -89,19 +110,12 @@ public abstract class AnnotationUtils {
     private static final class AliasDescriptor{
 
         private final Method sourceAttribute;
-
         private final Class<? extends Annotation> sourceAnnotationType;
-
         private final String sourceAttributeName;
-
-        private final Method aliasedAttribute;
-
+//        private final Method aliasedAttribute;
         private final Class<? extends Annotation> aliasedAnnotationType;
-
-        private final String aliasedAttributeName;
-
-        private final boolean isAliasPair;
-
+//        private final String aliasedAttributeName;
+//        private final boolean isAliasPair;
 
 
         public static AliasDescriptor from(Method attribute){
@@ -119,6 +133,8 @@ public abstract class AnnotationUtils {
             descriptor = new AliasDescriptor(attribute,aliasFor);
 
 
+
+            return null;
         }
 
 
@@ -132,8 +148,30 @@ public abstract class AnnotationUtils {
 
             this.aliasedAnnotationType = (Annotation.class == aliasFor.annotation() ? this.sourceAnnotationType : aliasFor.annotation());
 
+        }
 
+        private void validte(){
+//            if(!this.isAliasPair && !isAnnotation){
+//
+//            }
+        }
 
+        private String getAliasedAttributeName(AliasFor aliasFor,Method attribute){
+
+            String attributeName = aliasFor.attribute();
+            String value = aliasFor.value();
+
+            boolean attributeDeclared = StringUtils.hasText(attributeName);
+            boolean valueDeclared = StringUtils.hasText(value);
+
+            if(attributeDeclared && valueDeclared){
+                String msg = String.format("In @AliasFor declared on attribute '%s' in annotation [%s], attribute 'attribute' " +
+                                "and its alias 'value' are present with values of [%s] and [%s], but only one is permitted.",
+                        attribute.getName(), attribute.getDeclaringClass().getName(), attributeName, value);
+                throw new AnnotationConfigurationException(msg);
+            }
+            attributeName = (attributeDeclared ? attributeName : value);
+            return (StringUtils.hasText(attributeName) ? attributeName.trim() : attribute.getName());
         }
 
 
