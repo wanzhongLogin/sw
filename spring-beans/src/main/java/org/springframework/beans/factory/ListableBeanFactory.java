@@ -8,6 +8,9 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 /**
+ *
+ * 根据各种条件获取bean的配置清单
+ *
  * 对接口beanFactory的扩展
  *
  * 是BeanFactory接口的扩展，被能够一次性列举所有它们bean实例，而不是试图根据客户端请求一个一个的通过名字查找的

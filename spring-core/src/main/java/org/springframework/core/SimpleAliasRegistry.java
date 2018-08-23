@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 
 /**
  * aliasRegistry的默认实现
+ * 主要使用map作为alias缓存,并实现接口aliasRegistry
  */
 public class SimpleAliasRegistry implements AliasRegistry{
 

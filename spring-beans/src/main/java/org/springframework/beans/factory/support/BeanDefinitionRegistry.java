@@ -6,6 +6,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.core.AliasRegistry;
 
 /**
+ * 对beanDefinition的各种增删改操作
+ *
  * 包含bean定义的注册表的接口，例如RootBeanDefinition和ChildBeanDefinition实例。
  * 通常由BeanFactories实现，BeanFactories内部使用AbstractBeanDefinition层次结构。
  * 这是Spring的bean工厂包中唯一封装bean定义注册的接口。

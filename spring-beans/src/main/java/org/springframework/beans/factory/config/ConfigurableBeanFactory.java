@@ -12,6 +12,9 @@ import org.springframework.util.StringValueResolver;
 import java.beans.PropertyEditor;
 import java.security.AccessControlContext;
 
+/**
+ * 提供配置factory的各种方法
+ */
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory,SingletonBeanRegistry {
 
 

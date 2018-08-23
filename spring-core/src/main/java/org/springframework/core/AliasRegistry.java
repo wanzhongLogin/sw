@@ -2,6 +2,8 @@ package org.springframework.core;
 
 /**
  * 用于管理别名的公共接口。作为BeanDefinitionRegistry的超级接口
+ * 定义了对alias别名的简单增删改操作
+ *
  */
 public interface AliasRegistry {
 

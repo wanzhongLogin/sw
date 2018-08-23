@@ -6,6 +6,7 @@ import org.springframework.core.ResolvableType;
 
 /**
  * 用户获取bean的factory
+ * 定义获取bean和bean的各种属性
  */
 public interface BeanFactory {
 

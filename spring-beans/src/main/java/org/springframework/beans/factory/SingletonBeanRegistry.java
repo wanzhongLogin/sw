@@ -4,7 +4,8 @@ import com.sun.istack.internal.Nullable;
 
 /**
  * SingletonBeanRegistry
- * 定义了共享bean实例的注册接口
+ * 定义了共享bean实例的注册接
+ * 定义对单利bean的注册和获取
  */
 public interface SingletonBeanRegistry {
 
@@ -34,7 +35,13 @@ public interface SingletonBeanRegistry {
     int getSingletonCount();
 
     /**
+     * 获取所有注册的单利bean的名称
+     * @return
+     */
+    String[] getSingletonNames();
+
+    /**
      * return the singleton mutex uesed by this registry
      */
-    Object getSingletonMetex();
+    Object getSingletonMutex();
 }

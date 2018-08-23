@@ -5,6 +5,8 @@ import com.sun.istack.internal.Nullable;
 
 /**
  * 可以被作为分层结构中的一部分的bean工厂实现
+ *
+ * 集成beanFactory,并且在此功能上,增加了对parentFactory的支持
  */
 public interface HierarchicalBeanFactory  extends BeanFactory{
 
